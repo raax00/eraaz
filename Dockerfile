@@ -1,12 +1,12 @@
-# Step 1: Code ko build karne ke liye Maven ka use
-FROM maven:3.8.5-openjdk-17 AS build
+# Step 1: Code ko build karne ke liye Maven aur Eclipse Temurin ka use
+FROM maven:3.8.5-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Step 2: Sirf run karne ke liye lightweight Java image ka use
-FROM openjdk:17-jdk-slim
+# Step 2: Sirf run karne ke liye lightweight Eclipse Temurin JRE image
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
